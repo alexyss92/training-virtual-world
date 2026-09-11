@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>First WebXR Demo</title>
+
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <!-- Cielo -->
+        <a-sky color="#DCEEFF"></a-sky>
+
+        <!-- Pavimento -->
+        <a-plane
+            position="0 0 -4"
+            rotation="-90 0 0"
+            width="20"
+            height="20"
+            color="#E5E7EB">
+        </a-plane>
+
+        <!-- Cubo -->
+        <a-box
+            position="0 1 -3"
+            color="#2563EB">
+        </a-box>
+
+        <!-- Testo -->
+        <a-text
+            value="La mia prima scena WebXR"
+            position="-1.8 2.3 -3"
+            color="#111827">
+        </a-text>
+    </a-scene>
+</body>
+</html>
