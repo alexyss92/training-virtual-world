@@ -2,16 +2,16 @@
 
 ## Informazioni sul test
 
-- Data:
-- Browser:
-- Dispositivo:
-- Persona che esegue il test:
-- Risultato generale:
+- Data: 22.09.2026
+- Browser: Chrome
+- Dispositivo: Windows
+- Persona che esegue il test: Alessandra Diaspro
+- Risultato generale: Tutto funzionante
 
 ## 1. Caricamento della scena
 
 - [x] La pagina viene caricata correttamente
-- [ ] La console del browser non mostra errori
+- [x] La console del browser non mostra errori
 - [x] La scena A-Frame viene visualizzata
 - [x] Il caricamento termina in un tempo ragionevole
 
