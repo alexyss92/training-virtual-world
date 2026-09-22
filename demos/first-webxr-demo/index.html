@@ -8,37 +8,161 @@
         content="width=device-width, initial-scale=1.0"
     >
 
+    <link rel="icon" href="data:,">
+
     <title>First WebXR Demo</title>
 
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 </head>
 
 <body>
-    <a-scene>
+    <!-- ######### SCENA #########
+        rayOrigin: mouse fa partire il raggio dal puntatore del mouse 
+        objects: .clickable indica quali oggetti possono essere cliccati  --> 
+    <a-scene    
+            cursor="rayOrigin: mouse"
+            raycaster="objects: .clickable">
+
+        <a-assets>
+            <img 
+                id="floor-texture" 
+                src="./assets/textures/wood_planks_diff_4k.jpg">
+            <img
+                id="wall-texture"
+                src="./assets/textures/cherry_veneer_diff_4k.jpg">
+        </a-assets>
+
+        <a-asset-item
+            id="character-model"
+            src="./assets/models/characters/2016._halloween_little_witch.glb">
+        </a-asset-item>
+
         <!-- Cielo -->
         <a-sky color="#DCEEFF"></a-sky>
 
-        <!-- Pavimento -->
+        <!-- Pavimento:
+         nasce di default in verticale, motivo per cui si mette -90 se lo si vuole orizzontale -->
         <a-plane
             position="0 0 -4"
             rotation="-90 0 0"
             width="20"
             height="20"
-            color="#E5E7EB">
+            material="
+                src: #floor-texture; 
+                repeat: 5 5;
+                roughness: 0.8">
+        </a-plane>
+
+        <!-- Mura -->
+
+       <!-- Parete sinistra -->
+        <a-plane
+            position="-5 2.5 -5"
+            rotation="0 90 0"
+            width="10"
+            height="5"
+            material="src: #wall-texture; side: double">
+        </a-plane>
+
+        <!-- Parete destra -->
+        <a-plane
+            position="5 2.5 -5"
+            rotation="0 -90 0"
+            width="10"
+            height="5"
+            material="src: #wall-texture; side: double">
+        </a-plane>
+
+        <!-- Parete frontale -->
+        <a-plane
+            position="0 2.5 -10"
+            rotation="0 0 0"
+            width="10"
+            height="5"
+            material="src: #wall-texture; side: double">
+        </a-plane>
+
+        <!-- Soffitto -->
+        <a-plane
+            position="0 5 -5"
+            rotation="90 0 0"
+            width="10"
+            height="10"
+            material="src: #wall-texture; side: double">
         </a-plane>
 
         <!-- Cubo -->
         <a-box
-            position="0 1 -3"
-            color="#2563EB">
+            id="interactive-box"
+            class="clickable"
+            position="2 1 -3"
+            material="color: red; roughness: 0.7; metalness: 0.1">
         </a-box>
 
-        <!-- Testo -->
+        <!-- Character -->
+         <a-entity
+            id="character"
+            class="clickable"
+            drag-on-floor
+            position="0 0 -5"
+            rotation="0 0 0"
+            scale="1 1 1"
+            gltf-model="#character-model">
+        </a-entity>
+
+        <!-- Testo:
+         *remember: oggetti di fronte alla telecamera, si va in negativo con asse z -->
         <a-text
-            value="La mia prima scena WebXR"
+            value="La mia prima scena WebXR di Alessandra Diaspro"
             position="-1.8 2.3 -3"
-            color="#111827">
+            color="white">
         </a-text>
+
+        <!-- ######### LIGHT #########-->
+        <a-light
+            type="ambient"
+            color="#FFFFFF"
+            intensity="0.5">
+        </a-light>
+        
+        <a-light
+            type="directional"
+            color="#FFFFFF"
+            intensity="0.5"
+            position="-1 1 0">
+        </a-light>
+
+        <!-- ######### CAMERA #########-->
+
+        <!-- Telecamera, se non inserita ce ne è una di default -->
+        <!-- Contenitore utilizzato per spostare l'utente 
+         * movement-controls gestisce lo spostamento, piu' avanzato, servira' per sviluppo VR
+         * look-controls permette di guardare intorno con mouse, touchscreen o visore
+         * wasd-controls permette di muoversi con i tasti WASD -->
+        <a-entity 
+            id="camera-rig">
+            <!-- Telecamera posizionata all'altezza degli occhi -->
+            <a-camera 
+                position="0 1.6 0"
+                look-controls
+                wasd-controls>
+            </a-camera>
+        </a-entity>
     </a-scene>
+
+    <!-- ######### SCRIPT #########-->
+     <script>
+        const box = document.querySelector('#interactive-box');
+
+        let isRed = true;
+        box.addEventListener("click", function() {
+            if (isRed) {
+                box.setAttribute("material", "color", "green");
+            } else {
+                box.setAttribute("material", "color: red");
+            }
+            isRed = !isRed;
+        });
+     </script>
 </body>
 </html>
