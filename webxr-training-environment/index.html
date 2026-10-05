@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:,">
+
+    <title>Ambiente di formazione WebXR</title>
+
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+</head>
+
+<body>
+    <a-scene>
+        <!-- Risorse -->
+        <a-assets>
+            <img
+                id="floor-texture"
+                src="./assets/textures/wood_planks_diff_4k.jpg">
+        </a-assets>
+
+        <a-sky color="#DCEEFF"></a-sky>
+
+        <!-- Struttura della stanza: 10 × 10 m, altezza 3 m -->
+        <a-entity id="room">
+
+            <!-- Pavimento -->
+            <a-plane
+                id="floor"
+                position="0 0 -5"
+                rotation="-90 0 0"
+                width="10"
+                height="10"
+                material="src: #floor-texture; repeat: 3 3; roughness: 0.8">
+            </a-plane>
+
+            <!-- Parete sinistra -->
+            <a-plane
+                id="wall-left"
+                position="-5 1.5 -5"
+                rotation="0 90 0"
+                width="10"
+                height="3"
+                material="color: #F2F4F5; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Parete destra -->
+            <a-plane
+                id="wall-right"
+                position="5 1.5 -5"
+                rotation="0 -90 0"
+                width="10"
+                height="3"
+                material="color: #F2F4F5; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Parete frontale -->
+            <a-plane
+                id="wall-front"
+                position="0 1.5 -10"
+                width="10"
+                height="3"
+                material="color: #315C68; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Parete posteriore: apertura da X = -1 a X = 1 -->
+
+            <!-- Parte sinistra -->
+            <a-plane
+                position="-3 1.5 0"
+                rotation="0 180 0"
+                width="4"
+                height="3"
+                material="color: #F2F4F5; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Parte destra -->
+            <a-plane
+                position="3 1.5 0"
+                rotation="0 180 0"
+                width="4"
+                height="3"
+                material="color: #F2F4F5; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Parte sopra l'ingresso: apertura alta 2.2 m -->
+            <a-plane
+                position="0 2.6 0"
+                rotation="0 180 0"
+                width="2"
+                height="0.8"
+                material="color: #F2F4F5; roughness: 0.9; side: double">
+            </a-plane>
+
+            <!-- Soffitto -->
+            <a-plane
+                id="ceiling"
+                position="0 3 -5"
+                rotation="90 0 0"
+                width="10"
+                height="10"
+                material="color: #FFFFFF; roughness: 0.9; side: double">
+            </a-plane>
+
+        </a-entity>
+
+        <!-- Illuminazione -->
+        <a-light
+            type="ambient"
+            color="#FFFFFF"
+            intensity="0.6">
+        </a-light>
+
+        <a-light
+            type="point"
+            position="0 2.7 -5"
+            color="#FFFFFF"
+            intensity="0.8">
+        </a-light>
+
+        <!-- Punto iniziale dell'utente -->
+        <a-entity id="camera-rig" position="0 0 -1">
+            <a-camera
+                position="0 1.6 0"
+                look-controls
+                wasd-controls>
+            </a-camera>
+        </a-entity>
+
+    </a-scene>
+</body>
+</html>

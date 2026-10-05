@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="data:,">
 
@@ -18,36 +16,24 @@
 <body>
     <!-- ######### SCENA #########
         rayOrigin: mouse fa partire il raggio dal puntatore del mouse 
-        objects: .clickable indica quali oggetti possono essere cliccati  --> 
-    <a-scene    
-            cursor="rayOrigin: mouse"
-            raycaster="objects: .clickable">
+        objects: .clickable indica quali oggetti possono essere cliccati  -->
+    <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
         <a-assets>
-            <img 
-                id="floor-texture" 
-                src="./assets/textures/wood_planks_diff_4k.jpg">
-            <img
-                id="wall-texture"
-                src="./assets/textures/cherry_veneer_diff_4k.jpg">
-        </a-assets>
+            <img id="floor-texture" src="./assets/textures/wood_planks_diff_4k.jpg">
 
-        <a-asset-item
-            id="character-model"
-            src="./assets/models/characters/2016._halloween_little_witch.glb">
-        </a-asset-item>
+            <img id="wall-texture" src="./assets/textures/cherry_veneer_diff_4k.jpg">
+
+            <a-asset-item id="character-model" src="./assets/models/characters/2016._halloween_little_witch.glb">
+            </a-asset-item>
+        </a-assets>
 
         <!-- Cielo -->
         <a-sky color="#DCEEFF"></a-sky>
 
         <!-- Pavimento:
          nasce di default in verticale, motivo per cui si mette -90 se lo si vuole orizzontale -->
-        <a-plane
-            position="0 0 -4"
-            rotation="-90 0 0"
-            width="20"
-            height="20"
-            material="
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" material="
                 src: #floor-texture; 
                 repeat: 5 5;
                 roughness: 0.8">
@@ -55,81 +41,53 @@
 
         <!-- Mura -->
 
-       <!-- Parete sinistra -->
-        <a-plane
-            position="-5 2.5 -5"
-            rotation="0 90 0"
-            width="10"
-            height="5"
+        <!-- Parete sinistra -->
+        <a-plane position="-5 2.5 -5" rotation="0 90 0" width="10" height="5"
             material="src: #wall-texture; side: double">
         </a-plane>
 
         <!-- Parete destra -->
-        <a-plane
-            position="5 2.5 -5"
-            rotation="0 -90 0"
-            width="10"
-            height="5"
+        <a-plane position="5 2.5 -5" rotation="0 -90 0" width="10" height="5"
             material="src: #wall-texture; side: double">
         </a-plane>
 
         <!-- Parete frontale -->
-        <a-plane
-            position="0 2.5 -10"
-            rotation="0 0 0"
-            width="10"
-            height="5"
+        <a-plane position="0 2.5 -10" rotation="0 0 0" width="10" height="5"
             material="src: #wall-texture; side: double">
         </a-plane>
 
         <!-- Soffitto -->
-        <a-plane
-            position="0 5 -5"
-            rotation="90 0 0"
-            width="10"
-            height="10"
-            material="src: #wall-texture; side: double">
+        <a-plane position="0 5 -5" rotation="90 0 0" width="10" height="10" material="src: #wall-texture; side: double">
         </a-plane>
 
         <!-- Cubo -->
-        <a-box
-            id="interactive-box"
-            class="clickable"
-            position="2 1 -3"
-            material="color: red; roughness: 0.7; metalness: 0.1">
+        <a-box id="interactive-box" class="clickable target" position="2 1 -3"
+            material="color: black; roughness: 0.7; metalness: 0.1">
         </a-box>
 
+        <!-- Sfera -->
+        <a-sphere id="interactive-sphere" class="clickable target" position="-2 1.2 -3" radius="0.5"
+            material="color: black; roughness: 0.7">
+        </a-sphere>
+
+        <!-- Cilindro -->
+        <a-cylinder id="interactive-cylinder" class="clickable target" position="0 0.75 -2.5" radius="0.35" height="1.5"
+            material="color: black; roughness: 0.7">
+        </a-cylinder>
         <!-- Character -->
-         <a-entity
-            id="character"
-            class="clickable"
-            drag-on-floor
-            position="0 0 -5"
-            rotation="0 0 0"
-            scale="1 1 1"
-            gltf-model="#character-model">
+        <a-entity id="character" position="0 0 -5" rotation="0 0 0" scale="1 1 1" gltf-model="#character-model">
         </a-entity>
 
         <!-- Testo:
          *remember: oggetti di fronte alla telecamera, si va in negativo con asse z -->
-        <a-text
-            value="La mia prima scena WebXR di Alessandra Diaspro"
-            position="-1.8 2.3 -3"
-            color="white">
+        <a-text value="La mia prima scena WebXR di Alessandra Diaspro" position="-1.8 2.3 -3" color="white">
         </a-text>
 
         <!-- ######### LIGHT #########-->
-        <a-light
-            type="ambient"
-            color="#FFFFFF"
-            intensity="0.5">
+        <a-light type="ambient" color="#FFFFFF" intensity="0.5">
         </a-light>
-        
-        <a-light
-            type="directional"
-            color="#FFFFFF"
-            intensity="0.5"
-            position="-1 1 0">
+
+        <a-light type="directional" color="#FFFFFF" intensity="0.5" position="-1 1 0">
         </a-light>
 
         <!-- ######### CAMERA #########-->
@@ -139,30 +97,46 @@
          * movement-controls gestisce lo spostamento, piu' avanzato, servira' per sviluppo VR
          * look-controls permette di guardare intorno con mouse, touchscreen o visore
          * wasd-controls permette di muoversi con i tasti WASD -->
-        <a-entity 
-            id="camera-rig">
-            <!-- Telecamera posizionata all'altezza degli occhi -->
-            <a-camera 
-                position="0 1.6 0"
-                look-controls
-                wasd-controls>
+        <a-entity id="camera-rig">
+
+            <!-- Camera: mouse su PC, tracciamento del visore in VR -->
+            <a-camera position="0 1.6 0" look-controls wasd-controls>
+
+                <!-- Legenda in alto a sinistra -->
+                <a-entity position="-1.9 1 -1.5">
+
+                    <a-text value="Cursor left: laser azzurro" position="0 0 0" width="1.2" anchor="left" color="black">
+                    </a-text>
+
+                    <a-text value="Cursor right: laser rosa" position="0 -0.12 0" width="1.2" anchor="left" color="black">
+                    </a-text>
+
+                    <a-text value="Mouse: laser arancione" position="0 -0.24 0" width="1.2" anchor="left" color="black">
+                    
+
+                </a-entity>S
             </a-camera>
+
+            <!-- Controller sinistro: laser azzurro -->
+            <a-entity id="left-controller" laser-controls="hand: left" raycaster="
+        objects: .clickable;
+        far: 20;
+        lineColor: #00CCFF;
+        lineOpacity: 1">
+            </a-entity>
+
+            <!-- Controller destro: laser rosa -->
+            <a-entity id="right-controller" laser-controls="hand: right" raycaster="
+        objects: .clickable;
+        far: 20;
+        lineColor: #FF55AA;
+        lineOpacity: 1">
+            </a-entity>
+
         </a-entity>
     </a-scene>
 
-    <!-- ######### SCRIPT #########-->
-     <script>
-        const box = document.querySelector('#interactive-box');
-
-        let isRed = true;
-        box.addEventListener("click", function() {
-            if (isRed) {
-                box.setAttribute("material", "color", "green");
-            } else {
-                box.setAttribute("material", "color: red");
-            }
-            isRed = !isRed;
-        });
-     </script>
+    <script src="./js/main.js"></script>
 </body>
+
 </html>
