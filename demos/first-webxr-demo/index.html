@@ -10,14 +10,14 @@
 
     <title>First WebXR Demo</title>
 
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
 </head>
 
 <body>
     <!-- ######### SCENA #########
         rayOrigin: mouse fa partire il raggio dal puntatore del mouse 
         objects: .clickable indica quali oggetti possono essere cliccati  -->
-    <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+<a-scene xr-mode-ui="enabled: true">
 
         <a-assets>
             <img id="floor-texture" src="./assets/textures/wood_planks_diff_4k.jpg">
@@ -80,8 +80,9 @@
 
         <!-- Testo:
          *remember: oggetti di fronte alla telecamera, si va in negativo con asse z -->
-        <a-text value="La mia prima scena WebXR di Alessandra Diaspro" position="-1.8 2.3 -3" color="white">
+        <a-text value="TEST AGGIORNAMENTO 123" position="-1.8 2.3 -3" color="white">
         </a-text>
+
 
         <!-- ######### LIGHT #########-->
         <a-light type="ambient" color="#FFFFFF" intensity="0.5">
@@ -112,9 +113,19 @@
                     </a-text>
 
                     <a-text value="Mouse: laser arancione" position="0 -0.24 0" width="1.2" anchor="left" color="black">
-                    
+                    </a-text>
 
-                </a-entity>S
+                </a-entity>
+
+                <!-- Mirino: seleziona dopo 1,5 secondi -->
+<a-entity
+    id="gaze-cursor"
+    position="0 0 -1"
+    cursor="rayOrigin: entity; fuse: true; fuseTimeout: 1500"
+    raycaster="objects: .target; far: 20"
+    geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.025"
+    material="shader: flat; color: #FF00FF; depthTest: false">
+</a-entity>
             </a-camera>
 
             <!-- Controller sinistro: laser azzurro -->

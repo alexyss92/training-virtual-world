@@ -1,30 +1,12 @@
-const targets = document.querySelectorAll('.target');
+document.querySelectorAll('.target').forEach(function (object) {
+    let isColored = false;
 
-const controllerColors = {
-    'left-controller': '#00CCFF',
-    'right-controller': '#FF55AA'
-};
+    object.addEventListener('click', function () {
+        isColored = !isColored;
 
-targets.forEach(function (target) {
-    target.setAttribute('material', 'color', 'black');
+        const color = isColored ? '#FF9900' : '#000000';
+        object.setAttribute('material', 'color', color);
 
-    target.addEventListener('click', function (event) {
-        const cursor = event.detail.cursorEl;
-
-        if (!cursor) return;
-
-        let color;
-
-        if (cursor.id === 'left-controller'
-            || cursor.id === 'right-controller') {
-            color = controllerColors[cursor.id];
-        } else if (cursor === document.querySelector('a-scene')) {
-            // Il cursore del mouse è configurato sulla scena
-            color = '#FF8800';
-        }
-
-        if (color) {
-            target.setAttribute('material', 'color', color);
-        }
+        console.log(object.id, 'Nuovo colore:', color);
     });
 });

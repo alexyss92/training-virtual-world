@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,126 +8,196 @@
 
     <title>Ambiente di formazione WebXR</title>
 
-    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/main.js" defer></script>
 </head>
 
 <body>
+    <button id="exit-button" type="button">
+        Esci
+    </button>
+
     <a-scene>
-        <!-- Risorse -->
-        <a-assets>
-            <img
-                id="floor-texture"
-                src="./assets/textures/wood_planks_diff_4k.jpg">
-        </a-assets>
 
         <a-sky color="#DCEEFF"></a-sky>
 
-        <!-- Struttura della stanza: 10 × 10 m, altezza 3 m -->
+        <a-entity id="upraise-logo" gltf-model="url(./assets/models/upraise-logo-colori.glb)" position="0 1.6 -5"
+            rotation="0 0 0" scale="1 1 1" animation="property: rotation;
+               to: 0 360 0;
+               loop: true;
+               dur: 20000;
+               easing: linear">
+        </a-entity>
+
+
+
+        <!-- Struttura della stanza -->
         <a-entity id="room">
 
             <!-- Pavimento -->
-            <a-plane
-                id="floor"
-                position="0 0 -5"
-                rotation="-90 0 0"
-                width="10"
-                height="10"
-                material="src: #floor-texture; repeat: 3 3; roughness: 0.8">
+            <a-plane id="floor" position="0 0 -5" rotation="-90 0 0" width="10" height="10"
+                material="color: #D9DDE2; roughness: 0.85">
             </a-plane>
 
             <!-- Parete sinistra -->
-            <a-plane
-                id="wall-left"
-                position="-5 1.5 -5"
-                rotation="0 90 0"
-                width="10"
-                height="3"
-                material="color: #F2F4F5; roughness: 0.9; side: double">
+            <a-plane id="wall-left" position="-5 1.5 -5" rotation="0 90 0" width="10" height="3"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
             <!-- Parete destra -->
-            <a-plane
-                id="wall-right"
-                position="5 1.5 -5"
-                rotation="0 -90 0"
-                width="10"
-                height="3"
-                material="color: #F2F4F5; roughness: 0.9; side: double">
+            <a-plane id="wall-right" position="5 1.5 -5" rotation="0 -90 0" width="10" height="3"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
             <!-- Parete frontale -->
-            <a-plane
-                id="wall-front"
-                position="0 1.5 -10"
-                width="10"
-                height="3"
-                material="color: #315C68; roughness: 0.9; side: double">
+            <a-plane id="wall-front" position="0 1.5 -10" width="10" height="3"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
-            <!-- Parete posteriore: apertura da X = -1 a X = 1 -->
-
-            <!-- Parte sinistra -->
-            <a-plane
-                position="-3 1.5 0"
-                rotation="0 180 0"
-                width="4"
-                height="3"
-                material="color: #F2F4F5; roughness: 0.9; side: double">
+            <!-- Parete posteriore con ingresso -->
+            <a-plane position="-3 1.5 0" rotation="0 180 0" width="4" height="3"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
-            <!-- Parte destra -->
-            <a-plane
-                position="3 1.5 0"
-                rotation="0 180 0"
-                width="4"
-                height="3"
-                material="color: #F2F4F5; roughness: 0.9; side: double">
+            <a-plane position="3 1.5 0" rotation="0 180 0" width="4" height="3"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
-            <!-- Parte sopra l'ingresso: apertura alta 2.2 m -->
-            <a-plane
-                position="0 2.6 0"
-                rotation="0 180 0"
-                width="2"
-                height="0.8"
-                material="color: #F2F4F5; roughness: 0.9; side: double">
+            <a-plane position="0 2.6 0" rotation="0 180 0" width="2" height="0.8"
+                material="color: #F1F2F4; roughness: 0.9; side: double">
             </a-plane>
 
             <!-- Soffitto -->
-            <a-plane
-                id="ceiling"
-                position="0 3 -5"
-                rotation="90 0 0"
-                width="10"
-                height="10"
-                material="color: #FFFFFF; roughness: 0.9; side: double">
+            <a-plane id="ceiling" position="0 3 -5" rotation="90 0 0" width="10" height="10"
+                material="color: #FAFAFB; roughness: 0.9; side: double">
             </a-plane>
+
+            <!-- Battiscopa minimale -->
+            <a-box position="0 0.035 -9.97" width="10" height="0.07" depth="0.06" color="#9DA7B2">
+            </a-box>
+
+            <a-box position="-4.97 0.035 -5" width="0.06" height="0.07" depth="10" color="#9DA7B2">
+            </a-box>
+
+            <a-box position="4.97 0.035 -5" width="0.06" height="0.07" depth="10" color="#9DA7B2">
+            </a-box>
+
+            <!-- Linee architettoniche luminose -->
+            <a-box position="0 2.96 -9.95" width="9.7" height="0.025" depth="0.025"
+                material="shader: flat; color: #B8DFFF">
+            </a-box>
+
+            <a-box position="-4.95 2.96 -5" width="0.025" height="0.025" depth="9.7"
+                material="shader: flat; color: #B8DFFF">
+            </a-box>
+
+            <a-box position="4.95 2.96 -5" width="0.025" height="0.025" depth="9.7"
+                material="shader: flat; color: #B8DFFF">
+            </a-box>
 
         </a-entity>
 
+
+
+
+        <!-- Postazione sinistra -->
+        <a-entity id="intro-station" position="-4.93 1.6 -5" rotation="0 90 0">
+
+            <a-plane width="3.6" height="1.9" material="color: #202A35; roughness: 0.55">
+            </a-plane>
+
+            <a-plane position="0 0 0.012" width="3.54" height="1.84" material="shader: flat; color: #F8FAFD">
+            </a-plane>
+
+            <a-text value="WEBXR" position="0 0.4 0.025" align="center" width="3.5" color="#2563EB">
+            </a-text>
+
+            <a-text value="Esplora il WebXR\nattraverso un percorso interattivo." position="0 -0.18 0.025"
+                align="center" width="3" color="#253242">
+            </a-text>
+
+
+
+
+
+            <!-- Pulsante per iniziare la lezione -->
+            <a-entity position="0 -0.62 0.04">
+
+                <a-plane id="start-intro" class="clickable" width="1.5" height="0.3"
+                    material="shader: flat; color: #2563EB">
+                </a-plane>
+
+                <a-text value="INIZIA" position="0 0 0.01" align="center" width="2" color="#FFFFFF">
+                </a-text>
+
+            </a-entity>
+
+        </a-entity>
+
+
+
+        <!-- Postazione frontale -->
+        <a-entity id="activity-station" position="0 1.6 -9.93">
+
+            <a-plane width="3.6" height="1.9" material="color: #202A35; roughness: 0.55">
+            </a-plane>
+
+            <a-plane position="0 0 0.012" width="3.54" height="1.84" material="shader: flat; color: #F8FAFD">
+            </a-plane>
+
+            <a-text value="ATTIVITA INTERATTIVA" position="0 0.4 0.025" align="center" width="3.5" color="#2563EB">
+            </a-text>
+
+            <a-text value="Scopri il WebXR attraverso\nattivita pratiche." position="0 -0.18 0.025" align="center"
+                width="3" color="#253242">
+            </a-text>
+        </a-entity>
+        </a-entity>
+
+        <!-- Postazione destra -->
+        <a-entity id="presentation-station" position="4.93 1.6 -5" rotation="0 -90 0">
+
+            <a-plane width="3.6" height="1.9" material="color: #202A35; roughness: 0.55">
+            </a-plane>
+
+            <a-plane position="0 0 0.012" width="3.54" height="1.84" material="shader: flat; color: #F8FAFD">
+            </a-plane>
+
+            <a-text value="PRESENTAZIONE" position="0 0.4 0.025" align="center" width="3.5" color="#2563EB">
+            </a-text>
+
+            <a-text value="Materiali e slide\nper approfondire il WebXR." position="0 -0.18 0.025" align="center"
+                width="3" color="#253242">
+            </a-text>
+        </a-entity>
+
+
         <!-- Illuminazione -->
-        <a-light
-            type="ambient"
-            color="#FFFFFF"
-            intensity="0.6">
+        <a-light type="ambient" color="#FFFFFF" intensity="0.7">
         </a-light>
 
-        <a-light
-            type="point"
-            position="0 2.7 -5"
-            color="#FFFFFF"
-            intensity="0.8">
+        <a-light type="directional" position="-2 2.8 1" intensity="0.8" color="#FFFFFF">
         </a-light>
 
         <!-- Punto iniziale dell'utente -->
         <a-entity id="camera-rig" position="0 0 -1">
-            <a-camera
-                position="0 1.6 0"
-                look-controls
-                wasd-controls>
+
+            <a-camera position="0 1.6 0" look-controls wasd-controls>
+
+                <!-- Mirino centrale -->
+                <a-cursor id="cursor" raycaster="objects: .clickable" fuse="false"
+                    geometry="primitive: ring; radiusInner: 0.006; radiusOuter: 0.010"
+                    material="shader: flat; color: #2563EB">
+                </a-cursor>
+
             </a-camera>
+
         </a-entity>
+
+
 
     </a-scene>
 </body>
+
 </html>
