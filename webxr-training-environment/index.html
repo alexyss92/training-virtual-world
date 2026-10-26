@@ -181,13 +181,21 @@
         </a-light>
 
         <!-- Punto iniziale dell'utente -->
-        <a-entity id="camera-rig" position="0 0 -1">
+        <a-entity
+            id="camera-rig"
+            position="0 0 -1"
+            wasd-controls="acceleration: 20"
+            room-collider>
 
-            <a-camera position="0 1.6 0" look-controls wasd-controls>
+            <a-camera position="0 1.6 0" look-controls>
 
-                <!-- Mirino centrale -->
-                <a-cursor id="cursor" raycaster="objects: .clickable" fuse="false"
-                    geometry="primitive: ring; radiusInner: 0.006; radiusOuter: 0.010"
+                <a-cursor
+                    id="cursor"
+                    raycaster="objects: .clickable"
+                    fuse="false"
+                    geometry="primitive: ring;
+                            radiusInner: 0.006;
+                            radiusOuter: 0.010"
                     material="shader: flat; color: #2563EB">
                 </a-cursor>
 
