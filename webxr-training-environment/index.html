@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:,">
 
-    <title>Ambiente di formazione WebXR</title>
+    <title>UPRAISE - WebXR Training Environment</title>
 
     <!-- Framework -->
     <script src="https://aframe.io/releases/1.8.0/aframe.min.js"></script>
@@ -15,6 +15,9 @@
     <script src="./js/components/collision/room-collider.js" defer></script>
     <script src="./js/components/collision/object-collider.js" defer></script>
     <script src="./js/components/collision/hand-collider.js" defer></script>
+
+    <!-- Locomozione -->
+    <script src="./js/components/locomotion/hand-teleportation.js" defer></script>
 
     <!-- Interazioni -->
     <script src="./js/components/interaction/trigger-zone.js" defer></script>
@@ -48,7 +51,7 @@
         <a-entity id="room">
 
             <!-- Pavimento -->
-            <a-plane id="floor" position="0 0 -5" rotation="-90 0 0" width="10" height="10"
+            <a-plane id="floor" position="0 0 -5" rotation="-90 0 0" width="10" height="10" class="teleportable"
                 material="color: #D9DDE2; roughness: 0.85">
             </a-plane>
 
@@ -165,7 +168,6 @@
                 width="3" color="#253242">
             </a-text>
         </a-entity>
-        </a-entity>
 
         <!-- Postazione destra -->
         <a-entity id="presentation-station" position="4.93 1.6 -5" rotation="0 -90 0">
@@ -205,10 +207,11 @@
                 hand-tracking-controls="hand: left">
             </a-entity>
 
-            <!-- Mano destra -->
+            <!-- Mano destra: da disibilitare il trasporto durante le attivita'-->
             <a-entity
                 id="right-hand"
-                hand-tracking-controls="hand: right">
+                hand-tracking-controls="hand: right"
+                hand-teleportation>
             </a-entity>
 
             <a-camera position="0 1.6 0" look-controls>
